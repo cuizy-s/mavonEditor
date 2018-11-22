@@ -145,7 +145,7 @@
                         <input type="text" v-model="link_addr" :placeholder="link_type == 'link' ? d_words.tl_popup_link_addr : d_words.tl_popup_img_link_addr">
                     </div>
                     <div class="link-addr input-wrapper">
-                        <input type="file" ref="file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" @change="saveFiles($event)" multiple="multiple"/>{{d_words.tl_upload}}
+                        <input type="file" ref="file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" @change="saveFiles($event)" multiple="multiple"/>
                     </div>
 
                     <div class="op-btn cancel" @click.stop="s_img_upload_open = false">{{d_words.tl_popup_link_cancel}}</div>
@@ -235,7 +235,7 @@
                 // this.img_file.unshift([(this.num + 1), null]);
                 // this.num = this.num + 1;
                 this.img_file.push([$file,this.num])
-                this.$emit('imgAdd', this.num, $file, this.link_text, this.link_addr);
+                this.$emit('imgAdd', this.num, $file, true, this.link_text, this.link_addr);
                 this.num = this.num + 1;
                 this.s_img_dropdown_open = false;
             },
@@ -428,7 +428,7 @@
         position fixed
         box-sizing border-box
         text-align center
-        width 24%
+        width 34%
         left 38%
         @media only screen and (max-width 1500px)
             width 34%
@@ -445,7 +445,7 @@
         transition all 0.1s linear 0s
         z-index 3
         background #fff
-        border-radius 2px
+        border-radius 5px
         box-shadow: 0 0px 5px rgba(255,255,255, .156863), 0 0px 5px rgba(255,255,255, .227451)
         i
             font-size 24px
@@ -457,12 +457,13 @@
         .title
             font-size 20px
             margin-bottom 30px
-            margin-top 10px
+            margin-top -27px
             font-weight 500 !important
         .input-wrapper
-            margin-top 10px
+            margin-top 20px
             width 80%
             border  1px solid #eeece8
+            border-radius 3px
             text-align left
             margin-left 10%
             height 35px

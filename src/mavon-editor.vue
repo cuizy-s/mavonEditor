@@ -404,6 +404,7 @@ export default {
             this.$emit('imgDel', file);
         },
         $imgAdd(pos, $file, isinsert, text, addr) {
+            // alert(text + " | " + addr);
             if (isinsert === undefined) isinsert = true;
             var $vm = this;
             if (this.__rFilter == null) {
@@ -424,7 +425,7 @@ export default {
                             str: ''
                         });
                     $vm.$nextTick(function () {
-                        $vm.$emit('imgAdd', pos, $file, text, addr);
+                        $vm.$emit('imgAdd', pos, $file, isinsert, text, addr);
                     })
                 }
             }
