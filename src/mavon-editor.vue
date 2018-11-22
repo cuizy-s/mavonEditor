@@ -403,7 +403,7 @@ export default {
             this.iRender();
             this.$emit('imgDel', file);
         },
-        $imgAdd(pos, $file, isinsert) {
+        $imgAdd(pos, $file, isinsert, text, addr) {
             if (isinsert === undefined) isinsert = true;
             var $vm = this;
             if (this.__rFilter == null) {
@@ -424,7 +424,7 @@ export default {
                             str: ''
                         });
                     $vm.$nextTick(function () {
-                        $vm.$emit('imgAdd', pos, $file);
+                        $vm.$emit('imgAdd', pos, $file, text, addr);
                     })
                 }
             }

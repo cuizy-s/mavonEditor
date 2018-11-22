@@ -198,7 +198,7 @@
             }
         },
         methods: {
-            saveFiles($event){
+            saveFiles($event) {
                 this.imageFileUploadEvent = $event;
             },
             $imgLinkAdd() {
@@ -235,7 +235,7 @@
                 // this.img_file.unshift([(this.num + 1), null]);
                 // this.num = this.num + 1;
                 this.img_file.push([$file,this.num])
-                this.$emit('imgAdd', this.num, $file);
+                this.$emit('imgAdd', this.num, $file, this.link_text, this.link_addr);
                 this.num = this.num + 1;
                 this.s_img_dropdown_open = false;
             },
