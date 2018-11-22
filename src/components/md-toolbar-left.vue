@@ -70,7 +70,7 @@
                 <div  class="op-image popup-dropdown" v-show="s_img_dropdown_open" @mouseleave="$mouseleave_img_dropdown" @mouseenter="$mouseenter_img_dropdown">
                     <div  class="dropdown-item" @click.stop="$toggle_imgLinkAdd('imagelink')"><span>{{d_words.tl_image}}</span></div>
                     <div class="dropdown-item" style="overflow: hidden">
-                        <input type="file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" @change="$imgAdd($event)" multiple="multiple"/>{{d_words.tl_upload}}
+                        <div  class="dropdown-item" @click.stop="$toggle_imgUploadAdd('imagelink')"><span>{{d_words.tl_popup_img_link_title}}</span></div>
                     </div>
 
                     <div
@@ -130,6 +130,30 @@
                 </div>
             </div>
         </transition>
+
+        <!-- 添加图片上传 -->
+        <transition name="fade">
+            <div class="add-image-link-wrapper"  v-if="s_img_upload_open">
+                <div class="add-image-link">
+                    <i @click.stop.prevent="s_img_upload_open = false" class="fa fa-mavon-times"
+                       aria-hidden="true"></i>
+                    <h3 class="title">{{link_type == 'link' ? d_words.tl_popup_link_title : d_words.tl_popup_img_link_title}}</h3>
+                    <div class="link-text input-wrapper">
+                        <input ref="linkTextInput" type="text" v-model="link_text" :placeholder="link_type == 'link' ? d_words.tl_popup_link_text : d_words.tl_popup_img_link_text">
+                    </div>
+                    <div class="link-addr input-wrapper">
+                        <input type="text" v-model="link_addr" :placeholder="link_type == 'link' ? d_words.tl_popup_link_addr : d_words.tl_popup_img_link_addr">
+                    </div>
+                    <div class="link-addr input-wrapper">
+                        <input type="file" ref="file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" @change="saveFiles($event)" multiple="multiple"/>{{d_words.tl_upload}}
+                    </div>
+
+                    <div class="op-btn cancel" @click.stop="s_img_upload_open = false">{{d_words.tl_popup_link_cancel}}</div>
+                    <div class="op-btn sure" @click.stop="$imgAdd(imageFileUploadEvent)">{{d_words.tl_popup_link_sure}}</div>
+                </div>
+            </div>
+        </transition>
+
     </div>
 </template>
 <script type="text/ecmascript-6">
@@ -164,14 +188,19 @@
                 s_img_dropdown_open: false,
                 s_header_dropdown_open: false,
                 s_img_link_open: false,
+                s_img_upload_open: false,
                 trigger: null,
                 num: 0,
                 link_text: '',
                 link_addr: '',
-                link_type: 'link'
+                link_type: 'link',
+                imageFileUploadEvent: null
             }
         },
         methods: {
+            saveFiles($event){
+                this.imageFileUploadEvent = $event;
+            },
             $imgLinkAdd() {
                 this.$emit('toolbar_left_addlink', this.link_type, this.link_text, this.link_addr);
                 this.s_img_link_open = false;
@@ -180,6 +209,15 @@
                 this.link_type = type;
                 this.link_text = this.link_addr = '';
                 this.s_img_link_open = true;
+                this.$nextTick(() => {
+                    this.$refs.linkTextInput.focus()
+                })
+                this.s_img_dropdown_open = false;
+            },
+            $toggle_imgUploadAdd(type) {
+                this.link_type = type;
+                this.link_text = this.link_addr = '';
+                this.s_img_upload_open = true;
                 this.$nextTick(() => {
                     this.$refs.linkTextInput.focus()
                 })
@@ -214,6 +252,7 @@
             },
             $imgAdd($e) {
                 this.$imgFilesAdd($e.target.files);
+                this.s_img_upload_open = false;
             },
             $imgDel(pos) {
                 this.$emit('imgDel', this.img_file[pos]);
