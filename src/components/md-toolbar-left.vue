@@ -348,7 +348,6 @@
             handleClose(e) {
                 this.s_img_dropdown_open = false;
             }
-
         }
     }
 </script>
