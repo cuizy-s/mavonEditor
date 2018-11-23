@@ -142,7 +142,7 @@
                         <input ref="linkTextInput" type="text" v-model="link_text" :placeholder="link_type == 'link' ? d_words.tl_popup_link_text : d_words.tl_popup_img_link_text">
                     </div>
                     <div class="link-addr input-wrapper">
-                        <input type="text" v-model="link_addr" :placeholder="link_type == 'link' ? d_words.tl_popup_link_addr : d_words.tl_popup_img_link_addr">
+                        <input type="text" v-model="image_tag" :placeholder="link_type == 'link' ? d_words.tl_popup_link_addr : d_words.tl_popup_img_tag">
                     </div>
                     <div class="link-addr input-wrapper">
                         <input type="file" ref="file" accept="image/gif,image/jpeg,image/jpg,image/png,image/svg" @change="saveFiles($event)" multiple="multiple"/>
@@ -193,6 +193,7 @@
                 num: 0,
                 link_text: '',
                 link_addr: '',
+                image_tag: '',
                 link_type: 'link',
                 imageFileUploadEvent: null
             }
@@ -207,7 +208,7 @@
             },
             $toggle_imgLinkAdd(type) {
                 this.link_type = type;
-                this.link_text = this.link_addr = '';
+                this.link_text = this.link_addr = this.image_tag = '';
                 this.s_img_link_open = true;
                 this.$nextTick(() => {
                     this.$refs.linkTextInput.focus()
@@ -216,7 +217,7 @@
             },
             $toggle_imgUploadAdd(type) {
                 this.link_type = type;
-                this.link_text = this.link_addr = '';
+                this.link_text = this.link_addr = this.image_tag = '';
                 this.s_img_upload_open = true;
                 this.$nextTick(() => {
                     this.$refs.linkTextInput.focus()
@@ -235,7 +236,7 @@
                 // this.img_file.unshift([(this.num + 1), null]);
                 // this.num = this.num + 1;
                 this.img_file.push([$file,this.num])
-                this.$emit('imgAdd', this.num, $file, true, this.link_text, this.link_addr);
+                this.$emit('imgAdd', this.num, $file, true, this.link_text, this.image_tag);
                 this.num = this.num + 1;
                 this.s_img_dropdown_open = false;
             },
